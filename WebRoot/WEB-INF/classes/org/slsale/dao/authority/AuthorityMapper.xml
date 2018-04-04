@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.slsale.dao.authority.AuthorityMapper">
+	<!-- getAuthority -->
+	<select id="getAuthority" resultType="authority" parameterType="authority">
+		select * from au_authority where roleId = #{roleId} and functionId = #{functionId}
+	</select>
+	
+	<select id="getList" resultType="authority" parameterType="authority">
+		select * from au_authority where roleId = #{roleId}
+	</select>
+	
+	<insert id="addAuthority" parameterType="authority">
+		insert into au_authority (roleId,functionId,userTypeId,creationTime,createdBy) values(
+			#{roleId},
+			#{functionId},
+			#{userTypeId},
+			#{creationTime},
+			#{createdBy}			
+			)
+	</insert>
+	
+	<update id="modifyAuthority" parameterType="authority">
+		update au_authority set
+			roleId = #{roleId},
+			functionId = #{functionId},
+			creationTime = #{creationTime},
+			createdBy = #{createdBy},
+			userTypeId = #{userTypeId}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteAuthority" parameterType="authority">
+		delete from au_authority
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test=" id != null">
+				and id = #{id}
+			</if>
+			<if test = "roleId != null ">
+				and roleId = #{roleId}
+			</if>
+		</trim>
+	</delete>
+	
+</mapper>

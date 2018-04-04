@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.slsale.dao.information.InformationMapper">
+	
+	<select id="getList" resultType="information" parameterType="information">
+		select * from information order by publishTime desc
+	</select>
+	<select id="getInformationList" resultType="information" parameterType="information">
+		select * from information 
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="state != null">
+			 and state = 1
+			</if>
+			<if test="fileName != null">
+			 and fileName like #{fileName}
+			</if>
+			<if test="title != null">
+			 and title like #{title}
+			</if>
+		</trim>
+		 order by publishTime desc limit #{starNum},#{pageSize}
+	</select>
+	<select id="getInformation" resultType="information" parameterType="information">
+		select * from information where id = #{id}
+	</select>
+	<select id="count" resultType="int" parameterType="information">
+		select count(id) from information
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="state != null">
+			 and state = 1
+			</if>
+			<if test="fileName != null">
+			 and fileName like CONCAT('%',#{fileName},'%')
+			</if>
+			<if test="title != null">
+			 and title like CONCAT('%',#{title},'%')
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="addInformation" parameterType="information">
+		insert  into `information`(`title`,`content`,`state`,`publisher`,`publishTime`,`typeId`,`typeName`,`fileName`,`filePath`,`fileSize`,`uploadTime`) values (
+		#{title},
+		#{content},
+		#{state},
+		#{publisher},
+		#{publishTime},
+		#{typeId},
+		#{typeName},
+		#{fileName},
+		#{filePath},
+		#{fileSize},
+		#{uploadTime}
+		);
+
+	</insert>
+	
+	<update id="modifyInformation" parameterType="information">
+		update information 
+			 <set>
+				 <if test="title != null"> title = #{title},</if>
+				 <if test="content != null"> content = #{content},</if>
+				 <if test="state != null"> state = #{state},</if>
+				 <if test="publisher != null"> publisher = #{publisher},</if>
+				 <if test="publishTime != null"> publishTime = #{publishTime},</if>
+				 <if test="typeId != null"> typeId = #{typeId},</if>
+				 <if test="typeName != null"> typeName = #{typeName},</if>
+				 <if test="fileName != null"> fileName = #{fileName},</if>
+				 <if test="filePath != null"> filePath = #{filePath},</if>
+				 <if test="fileSize != null"> fileSize = #{fileSize},</if>
+				 <if test="uploadTime != null"> uploadTime = #{uploadTime}</if>
+		     </set>
+		  	where id = #{id}
+	</update>
+	<update id="modifyInformationFileInfo" parameterType="information">
+		update information 
+			 <set>
+				 <if test="fileName != null"> fileName = #{fileName},</if>
+				 <if test="filePath != null"> filePath = #{filePath},</if>
+				 <if test="fileSize != null"> fileSize = #{fileSize},</if>
+				 <if test="uploadTime != null"> uploadTime = #{uploadTime}</if>
+		     </set>
+		  	where filePath = #{typeName}
+	</update>
+	
+	<delete id="deleteInformation" parameterType="information">
+		delete from information where id = #{id}
+	</delete>
+</mapper>  
+	

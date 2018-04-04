@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.slsale.dao.function.FunctionMapper">
+	<!-- getMainFunctionList -->
+	<select id="getMainFunctionList" resultType="function"
+		parameterType="authority">
+		SELECT * FROM au_function
+		WHERE id IN
+		(SELECT functionId FROM au_authority
+		WHERE roleId = #{roleId} AND parentId = 0 )
+	</select>
+
+	<!-- getSubFunctionList -->
+	<select id="getSubFunctionList" resultType="function"
+		parameterType="function">
+		SELECT * FROM au_function
+		WHERE parentId = #{id} AND id
+		IN
+		(
+		SELECT functionId FROM au_authority
+		WHERE roleId = #{roleId}
+		)
+	</select>
+
+	<select id="getFunctionListByRoId" resultType="function"
+		parameterType="authority">
+		select * from au_function where id in(select functionid
+		from au_authority where roleId = ${roleId}) and parentId > 0
+	</select>
+
+	<select id="getFunctionListByIn" resultType="function"
+		parameterType="String">
+		select * from au_function where id in(${sqlInString}) or
+		parentId in(select id from au_function where id in(${sqlInString}) and
+		parentId > 0) or parentId = 999
+	</select>
+
+	<select id="getFunctionById" resultType="function"
+		parameterType="function">
+		select * from au_function where id = #{id}
+	</select>
+	
+	<select id="getSubFuncList" resultType="function">
+		select * from au_function where parentId  = #{id}
+	</select>
+</mapper>

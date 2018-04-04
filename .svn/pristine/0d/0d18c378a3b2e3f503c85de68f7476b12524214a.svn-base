@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.slsale.dao.user.UserMapper">
+
+	<!-- getLoginUser -->
+	<select id="getLoginUser" resultType="user" parameterType="user">
+		select * from au_user 
+			where loginCode=#{loginCode} and password=#{password}
+	</select>
+	<!-- addUser -->
+	<insert id="addUser" parameterType="user">
+		insert into au_user(loginCode,password,userName) values(
+			#{loginCode},#{password},#{userName}
+		)
+	</insert>
+
+</mapper>

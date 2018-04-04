@@ -1,0 +1,11 @@
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc\:mysql\://192.168.1.15\:3306/slsaledb?useUnicode\=true&characterEncoding\=UTF-8
+uname=root
+password=123456
+minIdle=45
+maxIdle=50
+initialSize=5
+maxActive=100
+maxWait=100
+removeAbandonedTimeout=180
+removeAbandoned=true

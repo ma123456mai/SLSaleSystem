@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.slsale.dao.affiche.AfficheMapper">
+	
+	<select id="getList" resultType="affiche" parameterType="affiche">
+		select * from affiche order by publishTime desc
+	</select>
+	<select id="getAfficheList" resultType="affiche" parameterType="affiche">
+		select * from affiche order by publishTime desc limit #{starNum},#{pageSize}
+	</select>
+
+	<select id="getAffiche" resultType="affiche" parameterType="affiche">
+		select * from affiche where id = #{id}
+	</select>
+	
+	<select id="count" resultType="int" parameterType="affiche">
+		select count(id) from affiche
+	</select>
+	
+	<select id="getPortalAfficheList" resultType="affiche" parameterType="affiche">
+		select * from affiche WHERE 
+			NOW() BETWEEN startTime AND endTime 
+			order by publishTime desc 
+			limit #{starNum},#{pageSize}
+	</select>
+	
+	<select id="portalCount" resultType="int" parameterType="affiche">
+		select count(id) from affiche 
+			WHERE NOW() BETWEEN startTime AND endTime
+	</select>
+	
+	<insert id="addAffiche" parameterType="affiche">
+		insert into affiche (code,title,content,publisher,publishTime,startTime,endTime) values(
+			#{code},
+			#{title},
+			#{content},
+			#{publisher},
+			#{publishTime},
+			#{startTime},
+			#{endTime}			
+			)
+	</insert>
+	
+	<update id="modifyAffiche" parameterType="affiche">
+		update affiche set
+			code = #{code},
+			title = #{title},
+			content = #{content},
+			publisher = #{publisher},
+			publishTime = #{publishTime},
+			startTime = #{startTime},
+			endTime = #{endTime}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteAffiche" parameterType="affiche">
+		delete from affiche where id = #{id}
+	</delete>
+</mapper>  
+	
