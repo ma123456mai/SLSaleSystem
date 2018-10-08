@@ -1,5 +1,5 @@
 ## SLSaleSystem
-```    
+   
     ## 项目介绍
     
     * 本项目基于Spring、SpringMVC、Mybatis搭建，为课工厂的“SL会员商城”项目。
@@ -17,6 +17,5 @@
     
     若有问题随时可以联系 
     530700282@qq.com(同QQ号)
-    
-```
+
 
